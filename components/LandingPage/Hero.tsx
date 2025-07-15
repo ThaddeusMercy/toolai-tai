@@ -83,7 +83,7 @@ const Hero = () => {
   return (
     <div className="bg-custom-background-image bg-cover bg-center pb-[80px] md:pb-[150px]">
       <ContainerLayout>
-        <div className="w-full h-auto md:flex justify-between items-center mt-40 md:mt-[120px]">
+        <div className="w-full h-auto md:flex justify-between items-center mt-28 md:mt-[120px]">
           <div className="w-full md:w-[55%] h-auto">
             <p
               data-aos="zoom-in-up"
