@@ -1,0 +1,106 @@
+<div
+  className="w-full h-auto md:flex justify-between items-center mt-10 hidden"
+>
+  {/*
+  <div
+    className="w-[173px] h-[70px] border border-t-r rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image
+      src="{TransakLogo}"
+      alt="Transak Logo"
+      className="w-[173px] h-[88px]"
+    />
+    {/*
+  </div>
+  */} {/*
+  <div
+    className="w-[208px] h-[70px] custom-gradient rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image
+      src="{MoonPayLogo}"
+      alt="MoonPay Logo"
+      className="w-[208px] h-[70px]"
+    />
+    {/*
+  </div>
+  */} {/*
+  <div
+    className="w-[218px] h-[70px] custom-gradient rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image
+      src="{BitMartLogo}"
+      alt="BitMart Logo"
+      className="w-[218px] h-[70px]"
+    />
+    {/*
+  </div>
+  */} {/*
+  <div
+    className="w-[156px] h-[70px] custom-gradient rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image src="{AwrsLogo}" alt="Awrs Logo" className="w-[156px] h-[70px]" />
+    {/*
+  </div>
+  */} {/*
+  <div
+    className="w-[156px] h-[70px] rounded-[32px] custom-light-gradient flex justify-center items-center"
+  >
+    */}
+    <Image
+      src="{SafeHarbor}"
+      alt="SafeHarbor Logo"
+      className="w-[156px] h-[70px]"
+    />
+    {/*
+  </div>
+  */}
+</div>
+
+<div className="w-full h-auto grid grid-cols-2 gap-3 mt-10 md:hidden">
+  {/*
+  <div
+    className=" border border-t-r rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image src="{TransakLogo}" alt="Transak Logo" className="h-[70px]" />
+    {/*
+  </div>
+  */} {/*
+  <div
+    className="h-[70px] custom-gradient rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image src="{MoonPayLogo}" alt="MoonPay Logo" className="h-[70px]" />
+    {/*
+  </div>
+  */} {/*
+  <div
+    className="h-[70px] custom-gradient rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image src="{BitMartLogo}" alt="BitMart Logo" className="h-[70px]" />
+    {/*
+  </div>
+  */} {/*
+  <div
+    className="h-[70px] custom-gradient rounded-[32px] flex justify-center items-center"
+  >
+    */}
+    <Image src="{AwrsLogo}" alt="Awrs Logo" className="h-[70px]" />
+    {/*
+  </div>
+  */}
+</div>
+{/*
+<div
+  className="w-[156px] m-auto h-[70px] rounded-[32px] custom-light-gradient flex md:hidden justify-center items-center mt-5"
+>
+  */}
+  <Image src="{SafeHarbor}" alt="SafeHarbor Logo" className="h-[70px]" />
+  {/*
+</div>
+*/}
