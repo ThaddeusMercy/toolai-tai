@@ -152,13 +152,13 @@ const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={handleContinue}
                 disabled={!hasAccepted}
-                className={`px-6 py-3 rounded-[12px] font-medium transition-all ${
+                className={`px-6 py-3 rounded-[12px] font-medium lg:text-base text-base transition-all ${
                   hasAccepted
                     ? "bg-[#1FE2D6] text-[#00334B] hover:bg-[#1BC7BC]"
                     : "bg-gray-600 text-gray-400 cursor-not-allowed"
                 }`}
               >
-                Continue to Presale
+                Continue Presale
               </button>
             </div>
           </div>
