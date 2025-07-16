@@ -60,7 +60,7 @@ const nextConfig = {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
   
-  // Configuration optimized for production deployment
+  // Repository maintenance: Cache refresh trigger
   
   // SECURITY: Build-time environment checks
   publicRuntimeConfig: {
