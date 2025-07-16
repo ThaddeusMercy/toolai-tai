@@ -31,7 +31,9 @@ const modal = createAppKit({
     analytics: true,
     email: false,
     socials: [],
-    emailShowWallets: false
+    emailShowWallets: false,
+    swaps: false,
+    onramp: false
   },
   featuredWalletIds: [
     'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
@@ -39,7 +41,10 @@ const modal = createAppKit({
     'app.phantom', // Phantom
     '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369', // Rainbow
   ],
-  themeMode: 'dark'
+  themeMode: 'dark',
+  themeVariables: {
+    '--w3m-z-index': 1000
+  }
 })
 
 function ContextProvider({ children, cookies }: { children: ReactNode; cookies: string | null }) {
