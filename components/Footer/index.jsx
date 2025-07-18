@@ -10,7 +10,7 @@ import apple from "../../assets/svg/apple-logo.svg";
 import google from "../../assets/svg/google-logo.svg";
 import Instagram from "../../assets/svg/Instagram.svg";
 import Twitter from "../../assets/svg/Twitter.svg";
-import { FaLinkedin, FaTelegram, FaFacebook } from "react-icons/fa";
+import { FaLinkedin, FaTelegram, FaFacebook, FaDiscord, FaGithub } from "react-icons/fa";
 import comingSoonImage from "../../assets/png/coming-soon.png";
 
 const Footer = () => {
@@ -119,17 +119,27 @@ const Footer = () => {
             <div className="bg-[#0071A4] w-full h-[2px] my-6"></div>
 
             <div className="w-full flex items-center">
-              <Image src={Instagram} alt="Instagram" onClick={() => window.open("https://www.instagram.com/toolaiofficial?igsh=MW96NjMzMjZ0NGR5cQ==")} className="cursor-pointer"/>
-              <Image src={Twitter} alt="Twitter" className="ml-4 cursor-pointer" onClick={() => window.open("https://x.com/toolaiofficial?s=11")}/>
-              <div className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all" onClick={() => window.open("https://www.linkedin.com/company/toolai?trk=public_post_feed-actor-image")}>
+              <a href="https://www.instagram.com/toolaiofficial?igsh=MW96NjMzMjZ0NGR5cQ==" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                <Image src={Instagram} alt="Instagram" />
+              </a>
+              <a href="https://x.com/toolaiofficial?s=11" target="_blank" rel="noopener noreferrer" className="ml-4 cursor-pointer">
+                <Image src={Twitter} alt="Twitter" />
+              </a>
+              <a href="https://www.linkedin.com/company/toolai?trk=public_post_feed-actor-image" target="_blank" rel="noopener noreferrer" className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all">
                 <FaLinkedin size={16} className="text-white"/>
-              </div>
-              <div className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all" onClick={() => window.open("https://t.me/toolaiofficial")}>
+              </a>
+              <a href="https://t.me/toolaiofficial" target="_blank" rel="noopener noreferrer" className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all">
                 <FaTelegram size={16} className="text-white"/>
-              </div>
-              <div className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all" onClick={() => window.open("https://www.facebook.com/toolaiofficial")}>
+              </a>
+              <a href="https://www.facebook.com/toolaiofficial" target="_blank" rel="noopener noreferrer" className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all">
                 <FaFacebook size={16} className="text-white"/>
-              </div>
+              </a>
+              <a href="https://discord.gg/GPYvQw6g" target="_blank" rel="noopener noreferrer" className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all">
+                <FaDiscord size={16} className="text-white"/>
+              </a>
+              <a href="https://github.com/ToolAi-ai/toolai-web" target="_blank" rel="noopener noreferrer" className="ml-4 w-8 h-8 bg-white bg-opacity-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all">
+                <FaGithub size={16} className="text-white"/>
+              </a>
             </div>
           </div>
         </div>

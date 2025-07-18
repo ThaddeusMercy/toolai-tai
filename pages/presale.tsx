@@ -1229,7 +1229,7 @@ export default function Presale() {
                           <span className="text-white">$0.005 USD</span>
                         </div>
                         <div className="flex justify-between font-semibold border-t border-gray-600 pt-2">
-                          <span className="text-white">TAI+ tokens you'll receive in 90days(From Launch Date):</span>
+                          <span className="text-white">TAI+ Tokens you’ll receive before public sale (launch):</span>
                           <span className="text-[#03B1FF] text-sm sm:text-lg">{tokenAmount.toLocaleString()}</span>
                         </div>
                       </div>

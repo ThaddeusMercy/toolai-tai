@@ -91,7 +91,7 @@ const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
                   <li>You understand and agree to all terms.</li>
                   <li>Sales are final, and ToolAi provides no warranties or guarantees beyond proof of token transfer.</li>
                 </ul>
-                <p className="mt-2">If tokens are not distributed within 90 days, ToolAi will refund your payment in USD equivalent within 30 additional days.</p>
+                <p className="mt-2">If tokens are not distributed within 90 days, ToolAi will refund your payment in USD equivalent within 30 days from request date.</p>
               </div>
               
               <div>

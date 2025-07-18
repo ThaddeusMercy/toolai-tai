@@ -156,6 +156,7 @@ const Hero = () => {
               autoPlay
               loop
               muted
+              playsInline
             />
             <p className="text-[#FFFFFF] text-[18px] font-normal mb-6 mt-4 text-center">
               TAI+ Presale ends soon
