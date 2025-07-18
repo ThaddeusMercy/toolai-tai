@@ -11,6 +11,7 @@ import Image from "next/image";
 import logo from "../../assets/png/logo.png";
 import Link from "next/link";
 import type { Provider } from "@reown/appkit-adapter-solana/react";
+import TermsModal from '../components/TermsModal';
 
 // TypeScript declarations for Solana wallet (using AppKit)
 
@@ -810,22 +811,46 @@ export default function Presale() {
           throw new Error('Recipient address not configured');
         }
 
+        // Validate recipient address format
+        if (!recipientAddress.startsWith('0x') || recipientAddress.length !== 42) {
+          throw new Error('Invalid recipient address format');
+        }
+
 
         const ethPriceInUsd = await getNetworkTokenPrice();
 
 
         const usdAmountNum = parseFloat(amount);
+        if (isNaN(usdAmountNum) || usdAmountNum <= 0) {
+          throw new Error('Invalid amount');
+        }
+
         const ethAmount = usdAmountNum / ethPriceInUsd;
+        if (isNaN(ethAmount) || ethAmount <= 0) {
+          throw new Error('Invalid ETH amount calculated');
+        }
 
 
         const ethAmountFormatted = ethAmount.toFixed(18);
         const ethAmountWei = parseEther(ethAmountFormatted);
 
+        // Validate that the wei amount is positive
+        if (ethAmountWei <= BigInt(0)) {
+          throw new Error('Invalid transaction amount');
+        }
 
+        console.log('Transaction params:', {
+          to: recipientAddress,
+          value: ethAmountWei.toString(),
+          gas: '21000',
+          usdAmount: usdAmountNum,
+          ethAmount: ethAmountFormatted
+        });
 
         await sendTransaction({
           to: recipientAddress,
           value: ethAmountWei,
+          gas: BigInt(21000), // Standard gas limit for ETH transfer
         });
 
       } catch (error) {
@@ -1430,102 +1455,15 @@ export default function Presale() {
       </div>
 
       {/* Terms Modal */}
-      {showTerms && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-[#0A1B24] rounded-lg p-4 sm:p-6 max-w-4xl max-h-[85vh] sm:max-h-[80vh] overflow-y-auto w-full mx-4">
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">
-              ToolAi LLC TAI+ Token Presale Agreement
-            </h3>
-            <div className="text-white space-y-4 mb-6 max-h-60 sm:max-h-96 overflow-y-auto text-left">
-              <div className="text-xs sm:text-sm leading-relaxed">
-                <div className="mb-4">
-                  <p className="font-semibold text-white">
-                    <strong>TOOLAI LLC</strong><br />
-                    TAI+ Token Presale Agreement
-                  </p>
-                </div>
-
-                <p className="mb-4 text-white">
-                  <strong>Parties:</strong> ToolAi LLC (a Delaware Limited Liability Company) and the "Customer" (you, the purchaser)
-                </p>
-
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">1. Introduction</h3>
-                    <p className="text-gray-300">ToolAi LLC operates an AI-powered cryptocurrency platform that transforms knowledge into AI Intellectual Properties (AiiPs) using the TAI+ token. You are entering into this Agreement to participate in the presale of TAI+ tokens.</p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">2. Token Purchase</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
-                      <li>You agree to purchase TAI+ tokens at the presale price of $0.005 USD per token.</li>
-                      <li>You may pay for your TAI+ presale with any coin available to trade in your connected DeFi wallet.</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">3. Vesting Schedule</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
-                      <li>Your purchased tokens will vest over time.</li>
-                      <li>10% of the tokens vest each month (starting from launch date)..</li>
-                      <li>Tokens will be distributed monthly to the same DeFi Wallet (BSC Smart Chain or SOL Solana) used for your purchase.</li>
-                      <li><strong>DO NOT use a centralized exchange (e.g., Coinbase, Binance).</strong> ToolAi is not responsible for lost tokens sent to centralized platforms.</li>
-                      <li>Recommended wallets: Trust Wallet or MetaMask.</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">4. Compliance & Legal</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
-                      <li>This token is not a security and is not registered with the SEC.</li>
-                      <li>You confirm you are not a U.S. person or entity, or accessing this from a U.S. jurisdiction.</li>
-                      <li>You are purchasing these tokens for utility purposes only.</li>
-                      <li>ToolAi LLC reserves the right to refuse service to residents of restricted jurisdictions.</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">5. Risks & Disclaimers</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
-                      <li>Cryptocurrency investments are high-risk and volatile.</li>
-                      <li>You may lose your entire investment.</li>
-                      <li>ToolAi LLC makes no guarantees about future token performance or utility.</li>
-                      <li>Smart contract risks, technical failures, and regulatory changes could affect your token price.</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">6. Terms</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-300">
-                      <li>By participating, you agree to hold ToolAi LLC harmless from any losses.</li>
-                      <li>This agreement is governed by Delaware law.</li>
-                      <li>Any disputes will be resolved through binding arbitration in Delaware.</li>
-                      <li>ToolAi LLC reserves the right to modify these terms with notice.</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sticky bottom-0 bg-[#0A1B24] pt-4">
-              <button
-                onClick={() => setShowTerms(false)}
-                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg font-medium transition-all text-sm sm:text-base"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  setAgreedToTerms(true);
-                  setShowTerms(false);
-                }}
-                className="flex-1 bg-[#1FE2D6] hover:bg-[#1BC7BC] text-[#00334B] py-2 sm:py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all text-sm sm:text-base"
-              >
-                I Agree
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <TermsModal 
+        isOpen={showTerms} 
+        onClose={() => setShowTerms(false)}
+        onAccept={() => setAgreedToTerms(true)}
+        mode="agreement"
+        showCheckbox={false}
+        acceptButtonText="I Agree"
+        theme="dark"
+      />
 
       {/* Referral Question Modal */}
       {showReferralQuestion && (

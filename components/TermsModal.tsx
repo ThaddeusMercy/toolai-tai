@@ -4,36 +4,72 @@ import { useRouter } from "next/router";
 interface TermsModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAccept?: (accepted: boolean) => void;  // Custom callback for when accepted
+  mode?: 'navigation' | 'agreement';       // Navigation mode or just agreement
+  showCheckbox?: boolean;                  // Show checkbox or just button
+  acceptButtonText?: string;               // Custom button text
+  theme?: 'dark' | 'teal';                // Theme variations
 }
 
-const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
+const TermsModal: React.FC<TermsModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  onAccept,
+  mode = 'navigation',
+  showCheckbox = true,
+  acceptButtonText = 'Continue Presale',
+  theme = 'teal'
+}) => {
   const [hasAccepted, setHasAccepted] = useState(false);
   const router = useRouter();
 
   const handleContinue = () => {
-    if (hasAccepted) {
-      onClose();
+    if (showCheckbox && !hasAccepted) return;
+    
+    if (onAccept) {
+      onAccept(true);
+    }
+    
+    if (mode === 'navigation') {
       router.push("/presale");
     }
+    
+    onClose();
   };
 
   if (!isOpen) return null;
 
+  // Theme-based styling
+  const bgColor = theme === 'dark' ? 'bg-[#0A1B24]' : 'bg-[#08222B]';
+  const borderColor = theme === 'dark' ? 'border-gray-600' : 'border-[#1FE2D6]';
+  const maxWidth = theme === 'dark' ? 'max-w-4xl' : 'max-w-[700px]';
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] p-4">
-      <div className="bg-[#08222B] rounded-[16px] max-w-[700px] w-full max-h-[80vh] overflow-y-auto border border-[#1FE2D6]">
-        <div className="p-6">
-          <h2 className="text-[#1FE2D6] text-[24px] font-bold mb-2 text-center">
-            TOOLAI LLC
-          </h2>
-          <h3 className="text-[#1FE2D6] text-[20px] font-medium mb-6 text-center">
-            TAI+ Token Presale Agreement
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className={`${bgColor} rounded-lg ${maxWidth} w-full max-h-[85vh] sm:max-h-[80vh] overflow-y-auto mx-4 ${borderColor} ${theme === 'teal' ? 'border' : ''}`}>
+        <div className="p-4 sm:p-6">
+          <h3 className={`text-lg sm:text-xl font-semibold mb-4 ${theme === 'teal' ? 'text-[#1FE2D6] text-center' : 'text-white'}`}>
+            {theme === 'teal' && (
+              <>
+                <div className="text-[#1FE2D6] text-[24px] font-bold mb-2">TOOLAI LLC</div>
+                <div className="text-[#1FE2D6] text-[20px] font-medium mb-6">TAI+ Token Presale Agreement</div>
+              </>
+            )}
+            {theme === 'dark' && 'ToolAi LLC TAI+ Token Presale Agreement'}
           </h3>
           
-          <div className="text-[#FFFFFF] text-[14px] space-y-4 mb-6 max-h-[400px] overflow-y-auto pr-2">
-            <p className="font-medium">
-              <strong>Parties:</strong> ToolAi LLC (a Delaware Limited Liability Company) and the "Customer" (you, the purchaser)
-            </p>
+          <div className="text-white space-y-4 mb-6 max-h-60 sm:max-h-96 overflow-y-auto text-left">
+            <div className="text-xs sm:text-sm leading-relaxed">
+              <div className="mb-4">
+                <p className="font-semibold text-white">
+                  <strong>TOOLAI LLC</strong><br />
+                  TAI+ Token Presale Agreement
+                </p>
+              </div>
+
+              <p className="mb-4 text-white">
+                <strong>Parties:</strong> ToolAi LLC (a Delaware Limited Liability Company) and the "Customer" (you, the purchaser)
+              </p>
             
             <div className="space-y-4">
               <div>
@@ -127,38 +163,41 @@ const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
                 </ul>
               </div>
             </div>
+            </div>
           </div>
           
-          <div className="border-t border-[#1FE2D6] pt-4">
-            <label className="flex items-start gap-3 cursor-pointer mb-6">
-              <input
-                type="checkbox"
-                checked={hasAccepted}
-                onChange={(e) => setHasAccepted(e.target.checked)}
-                className="mt-1 w-4 h-4 accent-[#1FE2D6]"
-              />
-              <span className="text-[#FFFFFF] text-[14px] leading-relaxed">
-                I Agree to the ToolAi LLC TAI+ Token Presale Terms
-              </span>
-            </label>
+          <div className={`flex flex-col gap-3 sm:gap-4 sticky bottom-0 ${bgColor} pt-4`}>
+            {showCheckbox && (
+              <label className="flex items-start gap-3 cursor-pointer mb-6">
+                <input
+                  type="checkbox"
+                  checked={hasAccepted}
+                  onChange={(e) => setHasAccepted(e.target.checked)}
+                  className="mt-1 w-4 h-4 accent-[#1FE2D6]"
+                />
+                <span className="text-[#FFFFFF] text-[14px] leading-relaxed">
+                  I Agree to the ToolAi LLC TAI+ Token Presale Terms
+                </span>
+              </label>
+            )}
             
-            <div className="flex gap-4 justify-end">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
                 onClick={onClose}
-                className="px-6 py-3 rounded-[12px] border border-[#1FE2D6] text-[#1FE2D6] font-medium hover:bg-[#1FE2D6] hover:bg-opacity-10 transition-all"
+                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg font-medium transition-all text-sm sm:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={handleContinue}
-                disabled={!hasAccepted}
-                className={`px-6 py-3 rounded-[12px] font-medium lg:text-base text-base transition-all ${
-                  hasAccepted
-                    ? "bg-[#1FE2D6] text-[#00334B] hover:bg-[#1BC7BC]"
-                    : "bg-gray-600 text-gray-400 cursor-not-allowed"
+                disabled={showCheckbox ? !hasAccepted : false}
+                className={`flex-1 py-2 sm:py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all text-sm sm:text-base ${
+                  (showCheckbox && !hasAccepted)
+                    ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                    : "bg-[#1FE2D6] hover:bg-[#1BC7BC] text-[#00334B]"
                 }`}
               >
-                Continue Presale
+                {acceptButtonText}
               </button>
             </div>
           </div>
