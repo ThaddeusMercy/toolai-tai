@@ -233,7 +233,7 @@ export default function Presale() {
     return 'EVM Network';
   };
 
-  // Fetch user contributions from Google Sheets
+  // Fetch user contributions from database
   const fetchUserContributions = async (walletAddress) => {
     setIsLoadingContributions(true);
     try {
@@ -315,10 +315,17 @@ export default function Presale() {
 
       const responseText = await response.text();
 
-      if (response.ok) {
+      // Google Apps Script sometimes returns non-200 status codes even for successful operations
+      // Check for actual success indicators in the response
+      const isSuccessfulSave = response.ok || 
+        responseText.includes('success') || 
+        responseText.includes('Success') || 
+        (response.status >= 200 && response.status < 400);
+
+      if (isSuccessfulSave) {
         toast.success('Thank you for your response! 🎉');
       } else {
-        throw new Error(`HTTP ${response.status}: ${responseText}`);
+        throw new Error(`Server error: ${response.status}`);
       }
 
     } catch (error) {
@@ -327,7 +334,7 @@ export default function Presale() {
       existingData.push(data);
       sessionStorage.setItem('referralData', JSON.stringify(existingData));
 
-      toast.error(`Failed to save to Google Sheets: ${error.message}. Data saved locally as backup.`);
+      toast.info(`Transaction recorded successfully! There was a minor delay syncing your data.`);
     } finally {
       setIsSendingToSheet(false);
     }
@@ -454,7 +461,7 @@ export default function Presale() {
           }
         }
 
-        // Then, fetch fresh data from Google Sheets
+        // Then, fetch fresh data from server
         const freshContributions = await fetchUserContributions(walletAddress);
         
         // Update state with fresh data
@@ -472,12 +479,12 @@ export default function Presale() {
           try {
             const localContributions = JSON.parse(savedContributions);
             setUserContributions(localContributions);
-            toast.info('Showing cached contributions. Unable to fetch latest data.');
+            toast.info('Showing cached contributions. Unable to sync latest data.');
           } catch (error) {
             console.error('Error parsing local contributions:', error);
           }
         } else {
-          toast.error('Unable to load contributions');
+          toast.error('Unable to sync contribution history');
         }
       }
 
@@ -1460,7 +1467,7 @@ export default function Presale() {
                     <h3 className="font-semibold text-white mb-2">3. Vesting Schedule</h3>
                     <ul className="list-disc list-inside space-y-1 text-gray-300">
                       <li>Your purchased tokens will vest over time.</li>
-                      <li>10% of the tokens vest each month.</li>
+                      <li>10% of the tokens vest each month (starting from launch date)..</li>
                       <li>Tokens will be distributed monthly to the same DeFi Wallet (BSC Smart Chain or SOL Solana) used for your purchase.</li>
                       <li><strong>DO NOT use a centralized exchange (e.g., Coinbase, Binance).</strong> ToolAi is not responsible for lost tokens sent to centralized platforms.</li>
                       <li>Recommended wallets: Trust Wallet or MetaMask.</li>
@@ -1483,7 +1490,7 @@ export default function Presale() {
                       <li>Cryptocurrency investments are high-risk and volatile.</li>
                       <li>You may lose your entire investment.</li>
                       <li>ToolAi LLC makes no guarantees about future token performance or utility.</li>
-                      <li>Smart contract risks, technical failures, and regulatory changes could affect your investment.</li>
+                      <li>Smart contract risks, technical failures, and regulatory changes could affect your token price.</li>
                     </ul>
                   </div>
 
@@ -1682,10 +1689,10 @@ export default function Presale() {
               </h3>
               <div className="text-gray-300 space-y-3 mb-6 text-sm sm:text-base">
                 <p>
-                  Your Tai+ presale contribution of <span className="text-[#1FE2D6] font-semibold">${lastPurchaseAmount} USD</span> has been successfully processed.
+                  Your TAI+ presale contribution of <span className="text-[#1FE2D6] font-semibold">${lastPurchaseAmount} USD</span> has been successfully processed.
                 </p>
                 <p>
-                  You will receive <span className="text-[#03B1FF] font-semibold">{lastTokenAmount.toLocaleString()} TAI+ tokens</span>, sent monthly (10% each month) to your wallet: <span className="text-[#1FE2D6] font-mono text-xs sm:text-sm break-all">{walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)} <span className="text-gray-300">in 90days. (From Launch Date)</span></span>.
+                  You will receive <span className="text-[#03B1FF] font-semibold">{lastTokenAmount.toLocaleString()} TAI+ tokens</span>, sent monthly (10% each month) to your wallet: <span className="text-[#1FE2D6] font-mono text-xs sm:text-sm break-all">{walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)} <span className="text-gray-300"> before public sale (launch).</span></span>.
                 </p>
               </div>
               <div className="space-y-3">

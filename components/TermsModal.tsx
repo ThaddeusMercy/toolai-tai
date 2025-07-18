@@ -53,7 +53,7 @@ const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
                 <p className="font-semibold text-[#1FE2D6] mb-2">3. Vesting Schedule</p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Your purchased tokens will vest over time.</li>
-                  <li>10% of the tokens vest each month.</li>
+                  <li>10% of the tokens vest each month (starting from launch date).</li>
                 </ul>
               </div>
               
@@ -102,9 +102,9 @@ const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
               <div>
                 <p className="font-semibold text-[#1FE2D6] mb-2">9. Liability Disclaimer</p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li>ToolAi is not a financial advisor and is not responsible for any investment gains or losses.</li>
+                  <li>ToolAi is not a financial advisor and is not responsible for any token gains or losses.</li>
                   <li>By purchasing TAI+, you own the tokens outright, with no further obligations from ToolAi or its partners.</li>
-                  <li>Purchasing TAI+ is not an investment, and there are no refunds or returns.</li>
+                  <li>Purchasing TAI+ is not an token, and there are no refunds or returns.</li>
                 </ul>
               </div>
               
