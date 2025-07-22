@@ -335,7 +335,7 @@ export default function Presale() {
       existingData.push(data);
       sessionStorage.setItem('referralData', JSON.stringify(existingData));
 
-      toast.info(`Transaction recorded successfully! There was a minor delay syncing your data.`);
+      toast.info(`Transaction recorded successfully!`);
     } finally {
       setIsSendingToSheet(false);
     }

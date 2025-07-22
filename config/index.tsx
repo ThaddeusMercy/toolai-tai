@@ -1,6 +1,7 @@
 import { cookieStorage, createStorage } from '@wagmi/core'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
+import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 import { mainnet, arbitrum, polygon, bsc, optimism, base, solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 
 // Get projectId from Reown Cloud
@@ -29,7 +30,7 @@ export const wagmiAdapter = new WagmiAdapter({
   projectId,
 });
 
-// Set up the Solana Adapter
+// Set up the Solana Adapter - Reown AppKit handles wallet detection automatically
 export const solanaWeb3JsAdapter = new SolanaAdapter()
 
 export const config = wagmiAdapter.wagmiConfig; 
